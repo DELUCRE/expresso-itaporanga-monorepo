@@ -1,0 +1,20 @@
+{
+  "name": "expresso-frontend",
+  "version": "1.0.0",
+  "description": "Frontend da Expresso Itaporanga - Sistema de Gestão Logística",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "build": "echo 'Build completed - static site ready'"
+  },
+  "keywords": ["logistica", "entregas", "expresso", "itaporanga"],
+  "author": "DELUCRE",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

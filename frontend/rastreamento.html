@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rastreamento - Expresso Itaporanga</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <meta name="description" content="Rastreie sua encomenda em tempo real com a Expresso Itaporanga.">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header-institucional">
+        <nav class="nav-container">
+            <a href="/" class="logo">
+                Expresso <span class="destaque">Itaporanga</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="/">Início</a></li>
+                <li><a href="/sobre.html">Sobre</a></li>
+                <li><a href="/servicos.html">Serviços</a></li>
+                <li><a href="/contato.html">Contato</a></li>
+                <li><a href="/rastreamento.html" class="active">Rastreamento</a></li>
+                <li><a href="/gestao/">Sistema</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 3rem 0;">
+        <div class="hero-content">
+            <h1>Rastreamento de Encomendas</h1>
+            <p>Acompanhe sua entrega em tempo real</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        <section class="section">
+            <div class="container">
+                <div style="max-width: 600px; margin: 0 auto;">
+                    <div style="background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); text-align: center;">
+                        <div style="background: var(--cinza-claro); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 2rem;">🔍</div>
+                        
+                        <h2 style="color: var(--azul-principal); margin-bottom: 1rem;">Rastrear Encomenda</h2>
+                        <p style="color: #666; margin-bottom: 2rem;">Digite o código de rastreamento para acompanhar o status da sua entrega</p>
+                        
+                        <form id="form-rastreamento" style="margin-bottom: 2rem;">
+                            <div class="form-group" style="text-align: left;">
+                                <label for="codigo-rastreamento">Código de Rastreamento</label>
+                                <input type="text" id="codigo-rastreamento" name="codigo" class="form-control" placeholder="Ex: EI12345678" required style="text-align: center; font-size: 1.2rem; font-weight: bold; letter-spacing: 2px;">
+                            </div>
+                            <button type="submit" class="btn-primary" style="width: 100%; font-size: 1.1rem;">🔍 Rastrear Encomenda</button>
+                        </form>
+                        
+                        <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--azul-principal); text-align: left;">
+                            <h4 style="color: var(--azul-principal); margin-bottom: 1rem;">ℹ️ Como rastrear:</h4>
+                            <ul style="color: #666; margin: 0; padding-left: 1.5rem;">
+                                <li>Digite o código de rastreamento (formato: EI + 8 números)</li>
+                                <li>O código foi enviado por SMS/email quando a entrega foi criada</li>
+                                <li>Você pode acompanhar o status em tempo real</li>
+                                <li>Em caso de dúvidas, entre em contato conosco</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resultado do Rastreamento -->
+        <section id="resultado-rastreamento" style="display: none;">
+            <div class="container">
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                        <h3 style="color: var(--azul-principal); margin-bottom: 1.5rem; text-align: center;">📦 Detalhes da Entrega</h3>
+                        <div id="detalhes-entrega"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" style="background: var(--cinza-claro);">
+            <div class="container">
+                <h2 class="section-title">Status de Entrega</h2>
+                <p style="text-align: center; color: #666; margin-bottom: 3rem;">Entenda o que significa cada status da sua encomenda</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div style="background: #fff3cd; color: #856404; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">📋</div>
+                        <h3 style="color: #856404;">Pendente</h3>
+                        <p>Entrega cadastrada no sistema, aguardando coleta ou processamento.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div style="background: #d1ecf1; color: #0c5460; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">🚚</div>
+                        <h3 style="color: #0c5460;">Em Trânsito</h3>
+                        <p>Encomenda coletada e em transporte para o destino final.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div style="background: #d4edda; color: #155724; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">✅</div>
+                        <h3 style="color: #155724;">Entregue</h3>
+                        <p>Encomenda entregue com sucesso no endereço de destino.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div style="background: #f8d7da; color: #721c24; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem;">↩️</div>
+                        <h3 style="color: #721c24;">Devolvida</h3>
+                        <p>Entrega não foi possível, encomenda retornando ao remetente.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div style="text-align: center;">
+                    <h2 style="color: var(--azul-principal); margin-bottom: 1rem;">Não encontrou sua encomenda?</h2>
+                    <p style="color: #666; margin-bottom: 2rem; font-size: 1.1rem;">
+                        Entre em contato conosco para verificar o status da sua entrega
+                    </p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="/contato.html" class="btn-primary">📞 Falar com Atendimento</a>
+                        <a href="https://wa.me/5511999999999" class="btn-primary" style="background: #25d366;">💬 WhatsApp</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer style="background: var(--azul-principal); color: white; text-align: center; padding: 2rem 0; margin-top: 4rem;">
+        <div class="container">
+            <p>&copy; 2024 Expresso Itaporanga. Todos os direitos reservados.</p>
+            <p style="margin-top: 0.5rem; font-style: italic; color: var(--laranja-destaque);">
+                "Servir com paixão, viver como exemplo"
+            </p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/static/js/main.js"></script>
+    <script src="/static/js/api.js"></script>
+
+    <script>
+    // Formatar código automaticamente
+    document.getElementById('codigo-rastreamento').addEventListener('input', function(e) {
+        let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+        if (value.length > 2 && !value.startsWith('EI')) {
+            value = 'EI' + value.substring(2);
+        }
+        if (value.length > 10) {
+            value = value.substring(0, 10);
+        }
+        e.target.value = value;
+    });
+    </script>
+</body>
+</html>

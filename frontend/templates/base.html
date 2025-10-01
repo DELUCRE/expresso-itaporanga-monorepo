@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Expresso Itaporanga{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% block header %}
+    <header class="header-institucional">
+        <nav class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo">
+                Expresso <span class="destaque">Itaporanga</span>
+            </a>
+            <button class="mobile-menu-toggle show-mobile" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="{{ url_for('index') }}" {% if request.endpoint == 'index' %}class="active"{% endif %}>Início</a></li>
+                <li><a href="{{ url_for('sobre') }}" {% if request.endpoint == 'sobre' %}class="active"{% endif %}>Sobre Nós</a></li>
+                <li><a href="{{ url_for('servicos') }}" {% if request.endpoint == 'servicos' %}class="active"{% endif %}>Serviços</a></li>
+                <li><a href="{{ url_for('contato') }}" {% if request.endpoint == 'contato' %}class="active"{% endif %}>Contato</a></li>
+                <li><a href="{{ url_for('gestao_login') }}" {% if 'gestao' in request.endpoint %}class="active"{% endif %}>Gestão de Entregas</a></li>
+            </ul>
+        </nav>
+    </header>
+    {% endblock %}
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container" style="padding-top: 1rem;">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'success' if category == 'success' else 'error' }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    {% block footer %}
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Expresso Itaporanga - Todos os direitos reservados</p>
+            <p class="footer-slogan">"Servir com paixão, viver como exemplo"</p>
+        </div>
+    </footer>
+    {% endblock %}
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+    
+    <script>
+    // Função para toggle do menu mobile com animações
+    function toggleMobileMenu() {
+        const navMenu = document.getElementById('nav-menu');
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        
+        if (!navMenu || !menuToggle) return; // proteção contra erro
+
+        navMenu.classList.toggle('active');
+        menuToggle.classList.toggle('active');
+        
+        // Prevenir scroll do body quando menu está aberto
+        if (navMenu.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }
+    
+    // Inicialização quando DOM carrega
+    document.addEventListener('DOMContentLoaded', function() {
+        const navMenu = document.getElementById('nav-menu');
+        const menuToggle = document.querySelector('.mobile-menu-toggle');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+
+        if (!navMenu || !menuToggle) {
+            return; // se a página não tem esses elementos, não roda
+        }
+
+        // Fechar menu ao clicar em um link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Fechar menu ao clicar fora
+        document.addEventListener('click', function(event) {
+            if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Fechar menu com tecla ESC
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Ajustar menu em mudança de orientação
+        window.addEventListener('orientationchange', function() {
+            setTimeout(() => {
+                if (window.innerWidth > 768) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }, 100);
+        });
+
+        // Otimização para performance
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.innerWidth > 768) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }, 250);
+        });
+    });
+    </script>
+</body>
+</html>
